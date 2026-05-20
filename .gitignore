@@ -1,0 +1,30 @@
+# Large data files
+*.shp
+*.dbf
+*.shx
+*.prj
+*.geojson
+*.gpkg
+*.tif
+*.tiff
+*.dem
+*.img
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# macOS
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Credentials - never commit these
+*.json
+!requirements*.json
+*.key
+*.pem
