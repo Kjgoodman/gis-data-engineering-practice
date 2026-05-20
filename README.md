@@ -30,4 +30,5 @@ To develop hands-on experience with a professional GIS and data engineering stac
 - 'docs/' - notes and learning journal
 
 ##Status
+
 ...IN PROGRESS
