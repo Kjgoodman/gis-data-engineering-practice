@@ -43,3 +43,18 @@
 - Wrote test_connection.py to verify Python → PostGIS connection
 - Key learning: psycopg2-binary vs psycopg2 — use binary version on Mac to avoid compilation errors
 - Key learning: always activate venv with `source venv/bin/activate` before working on the project
+
+## Session 5 - First Data Ingestion
+- Installed geoalchemy2 (required by GeoPandas to_postgis())
+- Updated requirements.txt
+- Found Oregon county boundaries on Oregon GeoHub via ArcGIS REST API
+- Chose REST API over manual download to mirror real pipeline practices
+- Wrote ingest_counties.py to fetch GeoJSON directly from API URL
+- Discovered dataset included Washington state counties (39) mixed with Oregon (36)
+- Added COBCODE filter to isolate Oregon counties only
+- Loaded 36 Oregon counties into PostGIS table: oregon_counties_raw
+- Key learning: raw tables (_raw) preserve source data exactly as received
+- Key learning: two stage pipeline — raw ingestion first, transform second
+- Key learning: manual script run = one snapshot in time, production pipelines
+  use schedulers like Airflow to refresh data automatically
+- Next: ingest Oregon trails, BLM land ownership, and USGS hydrology raw data
