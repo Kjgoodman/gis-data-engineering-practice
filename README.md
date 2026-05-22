@@ -32,3 +32,12 @@ To develop hands-on experience with a professional GIS and data engineering stac
 ##Status
 
 ...IN PROGRESS
+
+## Stack Progress
+- ✅ GitHub — repo, structure, version control
+- ✅ BigQuery — dataset, geospatial queries, spatial joins
+- ✅ Docker + PostGIS — container running PostgreSQL 17 + PostGIS 3.5
+- ✅ Python — virtual environment, geospatial libraries, PostGIS connection
+- 🔲 Data Ingestion — Oregon counties, trails, land ownership, hydrology
+- 🔲 QGIS — visualization
+- 🔲 Tippecanoe — vector tiles
