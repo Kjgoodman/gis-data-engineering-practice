@@ -25,3 +25,21 @@
   - oregon_land_ownership (MULTIPOLYGON)
   - oregon_hydrology (MULTILINESTRING)
 - Key learning: GitHub stores code, Docker runs the live database - they are separate
+
+## Session 4 - Python Setup
+- Installed Homebrew (Mac package manager)
+- Installed pyenv to manage Python versions
+- Installed Python 3.11.9 via pyenv (fixed lzma warning by installing xz first)
+- Set Python 3.11.9 as local version for project via .python-version file
+- Created Python virtual environment (venv) inside project folder
+- Installed geospatial libraries:
+  - geopandas — spatial dataframes
+  - sqlalchemy — database connection manager
+  - psycopg2-binary — PostgreSQL driver
+  - shapely — geometry operations
+  - pandas — data manipulation
+  - requests — downloading data from URLs
+- Generated requirements.txt to document all dependencies
+- Wrote test_connection.py to verify Python → PostGIS connection
+- Key learning: psycopg2-binary vs psycopg2 — use binary version on Mac to avoid compilation errors
+- Key learning: always activate venv with `source venv/bin/activate` before working on the project
