@@ -38,6 +38,11 @@ To develop hands-on experience with a professional GIS and data engineering stac
 - ✅ BigQuery — dataset, geospatial queries, spatial joins
 - ✅ Docker + PostGIS — container running PostgreSQL 17 + PostGIS 3.5
 - ✅ Python — virtual environment, geospatial libraries, PostGIS connection
-- 🔲 Data Ingestion — Oregon counties, trails, land ownership, hydrology
+- 🔲 Data Ingestion
+  - ✅ Oregon counties (36 counties from Oregon GeoHub)
+  - ✅ USFS trails (10,196 trails from USFS REST API)
+  - 🔲 Oregon tax lots
+  - 🔲 USGS hydrology
+- 🔲 Data transformation and spatial joins
 - 🔲 QGIS — visualization
 - 🔲 Tippecanoe — vector tiles

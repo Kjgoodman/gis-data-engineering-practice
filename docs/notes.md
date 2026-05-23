@@ -58,3 +58,17 @@
 - Key learning: manual script run = one snapshot in time, production pipelines
   use schedulers like Airflow to refresh data automatically
 - Next: ingest Oregon trails, BLM land ownership, and USGS hydrology raw data
+
+## Session 6 - Data Ingestion Continued
+- Wrote ingest_trails.py to fetch USFS National Forest System Trails
+- Discovered USFS API has 2000 record limit per request
+- Implemented pagination using resultOffset parameter
+- Encountered HTTP 500 errors from USFS server at large batch sizes
+- Fixed by reducing BATCH_SIZE from 2000 to 500
+- Added retry logic with 3 attempts and 5 second delay between retries
+- Added 1 second delay between requests to be respectful of API
+- Successfully loaded 10,196 trails into PostGIS table: oregon_trails_raw
+- Key learning: always check API max record count before ingesting
+- Key learning: smaller batch sizes are more reliable than large requests
+- Key learning: retry logic is essential for unreliable government APIs
+- Next: ingest Oregon tax lots from Oregon Explorer
