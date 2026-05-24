@@ -72,3 +72,22 @@
 - Key learning: smaller batch sizes are more reliable than large requests
 - Key learning: retry logic is essential for unreliable government APIs
 - Next: ingest Oregon tax lots from Oregon Explorer
+
+## Session 7 - Data Ingestion Complete
+- Wrote ingest_land_ownership.py to fetch Oregon public/private land boundaries
+- Used batch size of 500 for reliability, loaded 3,291 features
+- Attempted USGS NHDPlus HR hydrology dataset but encountered 504 Gateway Timeout
+- Decided to drop hydrology dataset — not critical for onX Offroad focus
+- Explored trails dataset columns — discovered MVUM data already included:
+  - mvum_symbol, terra_motorized, motorcycle_managed, atv_managed etc.
+  - 1,938 motorized trails in dataset
+- Explored land ownership columns — confirmed state parks already included:
+  - OPRD (Oregon Parks and Recreation) = 294 features
+  - Also includes BLM, USFS, ODFW, NPS, and private land classifications
+- Key learning: always explore your data before sourcing additional datasets
+- Key learning: government datasets often include more attributes than expected
+- Raw ingestion phase complete — 3 datasets loaded:
+  - oregon_counties_raw (36 counties)
+  - oregon_trails_raw (10,196 trails)
+  - oregon_land_ownership_raw (3,291 features)
+- Next: transformation phase — clean, rename, and load into schema tables
