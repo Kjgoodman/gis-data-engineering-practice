@@ -111,3 +111,19 @@
 - Key learning: document data quality issues like null geometries — 
   this is what OnX QA workflows catch
 - Next: QGIS visualization
+
+## Session 9 - QGIS Visualization
+- Installed QGIS (Long Term Release)
+- Connected QGIS directly to PostGIS Docker container via PostgreSQL connection
+- Loaded three layers from PostGIS:
+  - oregon_counties — state boundary and county lines
+  - oregon_land_ownership — public/private land by managing agency
+  - oregon_trails — trail network with motorized use attributes
+- Styled land ownership by land_manager field (categorized symbology)
+- Styled trails by terra_motorized field (Y/N/N/A)
+  - Orange/red = motorized allowed
+  - Gray = no motorized use
+- Saved QGIS project as oregon_offroad.qgz in qgis/ folder
+- Key learning: QGIS .qgz file stores connection settings not data
+- Key learning: data lives in PostGIS, QGIS just visualizes it
+- Next: load transformed data to BigQuery, then vector tiles with Tippecanoe
