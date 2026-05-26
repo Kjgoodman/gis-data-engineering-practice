@@ -23,7 +23,6 @@
   - oregon_counties (MULTIPOLYGON)
   - oregon_trails (MULTILINESTRING)
   - oregon_land_ownership (MULTIPOLYGON)
-  - oregon_hydrology (MULTILINESTRING)
 - Key learning: GitHub stores code, Docker runs the live database - they are separate
 
 ## Session 4 - Python Setup
