@@ -152,3 +152,22 @@
 - Key learning: government data often uses coded values not plain text
 - Key learning: grouping by access type is more useful to end users than by agency
 - Next: load transformed data to BigQuery, then Tippecanoe vector tiles
+
+## Session 11 - BigQuery Data Load
+- Created Google Cloud service account with BigQuery Admin role
+- Downloaded JSON credentials file (protected by .gitignore)
+- Installed google-cloud-bigquery, google-cloud-bigquery-storage, pyarrow, pandas-gbq
+- Wrote load_to_bigquery.py to push PostGIS data to BigQuery
+- Troubleshooting:
+  - Script saved to wrong folder (pipelines/ instead of bigquery/) — moved with mv
+  - Dataset name case sensitive — Oregon_GIS not oregon_gis
+  - Missing pandas-gbq package — installed separately
+- Successfully loaded all three tables to BigQuery Oregon_GIS dataset:
+  - oregon_counties: 36 records
+  - oregon_trails: 8,522 records
+  - oregon_land_ownership: 3,266 records
+- Verified counts match PostGIS exactly
+- Key learning: BigQuery dataset names are case sensitive
+- Key learning: geometry must be converted to WKT string for BigQuery storage
+- Key learning: PostGIS = visualization database, BigQuery = analytics database
+- Next: Tippecanoe vector tiles

@@ -35,7 +35,7 @@ To develop hands-on experience with a professional GIS and data engineering stac
 
 ## Stack Progress
 - ✅ GitHub — repo, structure, version control
-- ✅ BigQuery — dataset, geospatial queries, spatial joins
+- ✅ BigQuery — dataset, geospatial queries, spatial joins, data loaded
 - ✅ Docker + PostGIS — container running PostgreSQL 17 + PostGIS 3.5
 - ✅ Python — virtual environment, geospatial libraries, PostGIS connection
 - ✅ Data Ingestion
@@ -44,12 +44,12 @@ To develop hands-on experience with a professional GIS and data engineering stac
   - ✅ Oregon land ownership (3,291 features from Oregon GeoHub)
 - ✅ Data Transformation
   - ✅ Oregon counties → 36 clean records
-  - ✅ Oregon trails → 8,522 clean records (1,674 null geometries excluded)
+  - ✅ Oregon trails → 8,522 clean records
   - ✅ Oregon land ownership → 3,266 clean records
 - ✅ QGIS Visualization
   - ✅ PostGIS connection established
   - ✅ Rule-based symbology for motorized trail use
   - ✅ Rule-based symbology for land ownership access type
   - ✅ XYZ satellite imagery basemap
-- 🔲 BigQuery — load transformed data to cloud
+- ✅ BigQuery — all three datasets loaded to cloud
 - 🔲 Tippecanoe — vector tiles
