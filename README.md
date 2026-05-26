@@ -46,6 +46,10 @@ To develop hands-on experience with a professional GIS and data engineering stac
   - ✅ Oregon counties → 36 clean records
   - ✅ Oregon trails → 8,522 clean records (1,674 null geometries excluded)
   - ✅ Oregon land ownership → 3,266 clean records
-- 🔲 QGIS — visualization
+- ✅ QGIS Visualization
+  - ✅ PostGIS connection established
+  - ✅ Rule-based symbology for motorized trail use
+  - ✅ Rule-based symbology for land ownership access type
+  - ✅ XYZ satellite imagery basemap
 - 🔲 BigQuery — load transformed data to cloud
 - 🔲 Tippecanoe — vector tiles

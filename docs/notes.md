@@ -127,3 +127,28 @@
 - Key learning: QGIS .qgz file stores connection settings not data
 - Key learning: data lives in PostGIS, QGIS just visualizes it
 - Next: load transformed data to BigQuery, then vector tiles with Tippecanoe
+
+## Session 10 - QGIS Symbology
+- Added XYZ tile basemap connection for satellite imagery (lighter than ArcGIS REST)
+- Set up rule-based symbology for oregon_trails:
+  - Discovered motorized use fields contain date ranges not Y/N values
+  - ATV year round (01/01-12/31) vs seasonal (any other date range)
+  - Motorcycle year round vs seasonal
+  - 4WD year round vs seasonal
+  - Snowmobile seasonal only (no year round — snow is seasonal!)
+  - Non motorized = gray
+- Set up rule-based symbology for oregon_land_ownership:
+  - Grouped land managers into access categories rather than individual agencies
+  - Public Open (BLM, USFS, OPRD, NPS, ODFW, ODF, ODSL) = green
+  - Public Restricted (DOD, TRIBAL, ODOT, BIA, USBR, USACE) = yellow
+  - Private (PVI, PNI, PV, FEE) = red
+  - Water = blue
+  - Other = gray
+- Applied cartographic adjustments:
+  - Reduced land ownership opacity to show trails through polygons
+  - Increased trail line width for visibility
+  - Ordered layers: counties bottom, land ownership middle, trails top
+- Key learning: always query DISTINCT values before writing symbology rules
+- Key learning: government data often uses coded values not plain text
+- Key learning: grouping by access type is more useful to end users than by agency
+- Next: load transformed data to BigQuery, then Tippecanoe vector tiles
