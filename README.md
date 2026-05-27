@@ -1,63 +1,103 @@
 # GIS Data Engineering Practice
 
-A personal project to build and document an end-to-end data pipeline using real public land, trail, and other datasets for the state of Oregon.
+A personal project building an end-to-end geospatial data pipeline 
+focused on motorized trail access, public land ownership, and 
+off-road route planning for Oregon.
 
 ## Purpose
-To develop hands-on experience with a professional GIS and data engineering stack (outside of ESRI products) including PostGIS, BigQuery, Python, QGIS, and GitHub - mirroring the workflows used by outdoor technology companies working with large-scale spatial datasets.
+To develop hands-on experience with a professional GIS and data 
+engineering stack used by recreation based technology companies working 
+with large-scale spatial datasets. Built to practice:
+- Spatial ETL pipeline development
+- Cloud and local database management
+- Vector tile generation and web map rendering
+- Automated QA workflows
+- Full stack GIS from raw source data to interactive web map
 
 ## Stack
-- **Database:** PostGIS (via Docker)
-- **Cloud Warehouse:** Google Bigquery
-- **Desktop GIS:** QGIS
-- **Language:** Python (Geopandas, Shapely, SQLAlchemy)
-- **Version Control:** GitHub
-- **Tile Generation:** Tippecanoe
+| Tool | Purpose |
+|------|---------|
+| PostgreSQL + PostGIS | Local spatial database via Docker |
+| Google BigQuery | Cloud data warehouse and spatial analytics |
+| Python (GeoPandas, SQLAlchemy) | Pipeline automation and data ingestion |
+| QGIS | Desktop visualization and visual QA |
+| GDAL/ogr2ogr | Spatial data format conversion |
+| Tippecanoe | Vector tile generation |
+| Martin | Local vector tile server |
+| MapLibre GL JS | Web map rendering |
+| GitHub | Version control and documentation |
 
 ## Data Sources
-- BLM (Federal Land Ownership)
-- USGS NHDplus (hydrology)
-- USFS National Forest System Trails
-- USGS 3DEP (elevation)
-- Oregon GEO (state pracels)
+| Dataset | Source | Features |
+|---------|--------|----------|
+| Oregon Counties | Oregon GeoHub REST API | 36 counties |
+| USFS Trails | USFS ArcGIS REST API | 8,522 trails |
+| Oregon Land Ownership | Oregon GeoHub REST API | 3,266 features |
+
+## Pipeline Architecture
+REST APIs (Oregon GeoHub, USFS)
+↓
+Python ingestion scripts → PostGIS raw tables
+↓
+SQL transformation → PostGIS clean tables
+↓
+Automated QA (qa_unsupervised.py)
+↓
+Visual QA (QGIS)
+↓
+BigQuery (cloud analytics)
+↓
+GDAL export → GeoJSON
+↓
+Tippecanoe → vector tiles (.pmtiles)
+↓
+Martin tile server → MapLibre GL JS web map
+
+## QA Approach
+This pipeline uses a two-layer QA approach:
+
+**Automated QA** — `pipelines/qa_unsupervised.py` checks:
+- Row counts against expected values
+- Null and invalid geometries
+- Null values in critical fields
+- Features outside expected geographic extent
+
+**Visual QA** — QGIS review of PostGIS layers before tile generation,
+checking for spatial accuracy, symbology correctness, and contextual issues
+that automated checks cannot catch.
+
+## Known Data Issues
+- 843 trails with null `terra_motorized` field (missing classification)
+- 2,685 trails outside Oregon extent (Washington region overlap)
+- 469 invalid land ownership geometries (source data slivers)
 
 ## Project Structure
-- 'data/' - raw and processed spatial datasets (not tracked by Git)
-- 'sql/ - schema, enrichment, and QA queries
-- 'pipelines/' - Python ingestion and processing scripts
-- 'bigquery/' - BigQuery load and query scripts
-- 'qgis/' - QGIS project files
-- 'tiles/' - vector tile generation scripts
-- 'docs/' - notes and learning journal
-
-##Status
-
-...IN PROGRESS
+- `data/` — raw and processed spatial datasets (not tracked by Git)
+- `sql/` — schema, enrichment, and QA queries
+- `pipelines/` — Python ingestion, transformation, and QA scripts
+- `bigquery/` — BigQuery load scripts and practice queries
+- `qgis/` — QGIS project files
+- `tiles/` — vector tile generation scripts and web map
+- `docs/` — notes, learning journal, and images
 
 ## Stack Progress
 - ✅ GitHub — repo, structure, version control
 - ✅ BigQuery — dataset, geospatial queries, spatial joins, data loaded
-- ✅ Docker + PostGIS — container running PostgreSQL 17 + PostGIS 3.5
-- ✅ Python — virtual environment, geospatial libraries, PostGIS connection
-- ✅ Data Ingestion
-  - ✅ Oregon counties (36 counties from Oregon GeoHub)
-  - ✅ USFS trails (10,196 trails from USFS REST API)
-  - ✅ Oregon land ownership (3,291 features from Oregon GeoHub)
-- ✅ Data Transformation
-  - ✅ Oregon counties → 36 clean records
-  - ✅ Oregon trails → 8,522 clean records
-  - ✅ Oregon land ownership → 3,266 clean records
-- ✅ QGIS Visualization
-  - ✅ PostGIS connection established
-  - ✅ Rule-based symbology for motorized trail use
-  - ✅ Rule-based symbology for land ownership access type
-  - ✅ XYZ satellite imagery basemap
+- ✅ Docker + PostGIS — PostgreSQL 17 + PostGIS 3.5
+- ✅ Python — virtual environment, geospatial libraries, pipeline scripts
+- ✅ Data Ingestion — 3 datasets from REST APIs with pagination and retry
+- ✅ Data Transformation — clean schema tables with documented QA findings
+- ✅ QGIS — rule-based symbology for motorized trails and land ownership
 - ✅ BigQuery — all three datasets loaded to cloud
-- ✅ Vector Tiles
-  - ✅ GeoJSON export via GDAL/ogr2ogr
-  - ✅ Tippecanoe tile generation (zoom 5-14)
-  - ✅ Martin tile server
-  - ✅ MapLibre GL JS web map with legend and labels
-- 🔲 QA Pipeline
+- ✅ Vector Tiles — Tippecanoe + Martin + MapLibre GL JS web map
+- ✅ Automated QA — geometry, attribute, and extent checks
+
+## Future Steps
+- ◻️ Supervised QA - Look for data anomalies, reconcile boundary overlaps, clean map annotations, add basemap selection, etx
+- ◻️ Reconcile all noted QA issues
+- ◻️ Push .pmtiles to cloud storage for staging with engineering team
+- ◻️ Create data dictionary
+- ◻️ Add/Schedule run_pipeline.sh script to periodically update data
 
 ## Map Preview (Prior to QA)
 ![Oregon Offroad Map](docs/images/oregon_offroad_map.png)
