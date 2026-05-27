@@ -199,3 +199,37 @@
 - Key learning: MapLibre requires glyphs property for text labels
 - Key learning: always check browser console for map rendering errors
 - Next: write a QA script, then clean up and finalize the portfolio
+
+## Session 13 - QA Pipeline
+- Wrote pipelines/qa_unsupervised.py for automated spatial QA
+- Checks include: row counts, null geometries, invalid geometries,
+  null critical fields, and features outside Oregon extent
+- QA results:
+
+### oregon_counties — ALL PASS
+- 36 rows, no null or invalid geometries, all within Oregon extent
+
+### oregon_trails — 2 WARNINGS
+- ⚠️ 843 trails with null terra_motorized field
+  - Different from N/A — completely missing classification
+  - Decision: document and flag, treat as unknown in symbology
+  - Future fix: add null check to transform.sql
+- ⚠️ 2,685 trails outside Oregon extent
+  - Caused by security_id filter capturing Oregon/Washington region
+  - Washington trails passed through to clean table
+  - Decision: document and flag
+  - Future fix: add spatial clip to Oregon boundary in transform.sql
+
+### oregon_land_ownership — 1 WARNING
+- ⚠️ 469 invalid geometries
+  - Likely self-intersections or slivers from source data
+  - Does not affect QGIS visualization or web map rendering
+  - Decision: document and flag
+  - Future fix: apply ST_MakeValid() in transform.sql
+
+### Key learnings
+- Automated QA catches objective errors that visual inspection misses at scale
+- Visual QA in QGIS remains essential for contextual and subjective issues
+- Two-layer QA approach: automated (qa_unsupervised.py) + visual (QGIS)
+- Known issues should be documented even when not immediately fixed
+- Next: finalize portfolio, clean up repo, write final README
