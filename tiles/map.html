@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Oregon Offroad Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      background: rgba(255,255,255,0.9);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 1;
+      min-width: 180px;
+    }
+    #legend h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+    #legend h4 {
+      margin: 8px 0 4px 0;
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 4px 0;
+      font-size: 12px;
+    }
+    .legend-color {
+      width: 20px;
+      height: 12px;
+      margin-right: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .legend-line {
+      width: 20px;
+      height: 3px;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="legend">
+    <h3>Oregon Offroad</h3>
+    <h4>Land Ownership</h4>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#228B22;opacity:0.7"></div>
+      Public Open
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#FFD700;opacity:0.7"></div>
+      Public Restricted
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#FF4444;opacity:0.7"></div>
+      Private
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#4444FF;opacity:0.7"></div>
+      Water
+    </div>
+    <h4>Trails</h4>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#8B4513"></div>
+      ATV Year Round
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#D2691E"></div>
+      ATV Seasonal
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#FF8C00"></div>
+      4WD Year Round
+    </div>
+     <div class="legend-item">
+      <div class="legend-line" style="background:#FFA500"></div>
+      4WD Seasonal
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#4169E1"></div>
+      Motorcycle Year Round
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#6495ED"></div>
+      Motorcycle Seasonal
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#800080"></div>
+      Snowmobile
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:#888888"></div>
+      Non Motorized
+    </div>
+  </div>
+  <script>
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: {
+        version: 8,
+        glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
+        sources: {
+          'osm': {
+            type: 'raster',
+            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+            attribution: '© OpenStreetMap Contributors'
+          },
+          'oregon-offroad': {
+            type: 'vector',
+            tiles: ['http://localhost:3000/oregon_offroad/{z}/{x}/{y}'],
+            minzoom: 5,
+            maxzoom: 14
+          }
+        },
+        layers: [
+          // Basemap
+          {
+            id: 'osm-tiles',
+            type: 'raster',
+            source: 'osm',
+            minzoom: 0,
+            maxzoom: 19
+          },
+          // Land ownership
+          {
+            id: 'land-public-open',
+            type: 'fill',
+            source: 'oregon-offroad',
+            'source-layer': 'land_ownership',
+            filter: ['in', 'land_manager', 'BLM', 'USFS', 'OPRD', 'NPS', 'ODFW', 'ODF', 'ODSL'],
+            paint: {
+              'fill-color': '#228B22',
+              'fill-opacity': 0.4
+            }
+          },
+          {
+            id: 'land-public-restricted',
+            type: 'fill',
+            source: 'oregon-offroad',
+            'source-layer': 'land_ownership',
+            filter: ['in', 'land_manager', 'DOD', 'TRIBAL', 'ODOT', 'BIA', 'USBR', 'USACE'],
+            paint: {
+              'fill-color': '#FFD700',
+              'fill-opacity': 0.4
+            }
+          },
+          {
+            id: 'land-private',
+            type: 'fill',
+            source: 'oregon-offroad',
+            'source-layer': 'land_ownership',
+            filter: ['in', 'land_manager', 'PVI', 'PNI', 'PV', 'FEE'],
+            paint: {
+              'fill-color': '#FF4444',
+              'fill-opacity': 0.3
+            }
+          },
+          {
+            id: 'land-water',
+            type: 'fill',
+            source: 'oregon-offroad',
+            'source-layer': 'land_ownership',
+            filter: ['in', 'land_manager', 'WATER', 'Water'],
+            paint: {
+              'fill-color': '#4444FF',
+              'fill-opacity': 0.4
+            }
+          },
+          // Counties outline
+          {
+            id: 'counties-outline',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'counties',
+            paint: {
+              'line-color': '#333333',
+              'line-width': 1
+            }
+          },
+          // County labels
+          {
+            id: 'counties-labels',
+            type: 'symbol',
+            source: 'oregon-offroad',
+            'source-layer': 'counties',
+            minzoom: 6,
+            layout: {
+              'text-field': ['get', 'county_name'],
+              'text-font': ['Open Sans Regular'],
+              'text-size': 11,
+              'text-transform': 'uppercase'
+            },
+            paint: {
+              'text-color': '#333333',
+              'text-halo-color': '#ffffff',
+              'text-halo-width': 1.5
+            }
+          },
+          // Trails
+          {
+            id: 'trails-atv-yearround',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['==', 'atv_managed', '01/01-12/31'],
+            paint: { 'line-color': '#8B4513', 'line-width': 2 }
+          },
+          {
+            id: 'trails-atv-seasonal',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['all',
+              ['!=', 'atv_managed', 'N/A'],
+              ['!=', 'atv_managed', '01/01-12/31'],
+              ['has', 'atv_managed']
+            ],
+            paint: { 'line-color': '#D2691E', 'line-width': 1.5 }
+          },
+          {
+            id: 'trails-fourwd-yearround',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['==', 'fourwd_managed', '01/01-12/31'],
+            paint: { 'line-color': '#FF8C00', 'line-width': 2 }
+          },
+           {
+            id: 'trails-fourwd-seasonal',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['all',
+              ['!=', 'fourwd_managed', 'N/A'],
+              ['!=', 'fourwd_managed', '01/01-12/31'],
+              ['has', 'fourwd_managed']
+            ],
+            paint: { 'line-color': '#FFA500', 'line-width': 1.5 }
+          },
+          {
+            id: 'trails-motorcycle-yearround',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['==', 'motorcycle_managed', '01/01-12/31'],
+            paint: { 'line-color': '#4169E1', 'line-width': 2 }
+          },
+          {
+            id: 'trails-motorcycle-seasonal',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['all',
+              ['!=', 'motorcycle_managed', 'N/A'],
+              ['!=', 'motorcycle_managed', '01/01-12/31'],
+              ['has', 'motorcycle_managed']
+            ],
+            paint: { 'line-color': '#6495ED', 'line-width': 1.5 }
+          },
+          {
+            id: 'trails-snowmobile',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['all',
+              ['!=', 'snowmobile_managed', 'N/A'],
+              ['has', 'snowmobile_managed']
+            ],
+            paint: { 'line-color': '#800080', 'line-width': 1.5 }
+          },
+          {
+            id: 'trails-nonmotorized',
+            type: 'line',
+            source: 'oregon-offroad',
+            'source-layer': 'trails',
+            filter: ['==', 'terra_motorized', 'N'],
+            paint: { 'line-color': '#888888', 'line-width': 1 }
+          }
+        ]
+      },
+      center: [-120.5, 43.8],
+      zoom: 6
+    });
+
+    // Add navigation controls
+    map.addControl(new maplibregl.NavigationControl());
+
+    // Add scale bar
+    map.addControl(new maplibregl.ScaleControl({
+      maxWidth: 100,
+      unit: 'imperial'
+    }));
+  </script>
+</body>
+</html>
