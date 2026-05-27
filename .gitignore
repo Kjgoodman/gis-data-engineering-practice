@@ -28,3 +28,10 @@ venv/
 !requirements*.json
 *.key
 *.pem
+
+# Vecotor tiles
+*.pmtiles
+*.mbtiles
+
+# Processed data
+data/processed/*.geojson
