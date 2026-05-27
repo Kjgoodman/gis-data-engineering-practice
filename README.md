@@ -90,7 +90,7 @@ that automated checks cannot catch.
 - ✅ Automated QA — geometry, attribute, and extent checks
 
 ## Future Steps
-- ◻️ Supervised QA - Look for data anomalies, reconcile boundary overlaps, clean map annotations, add basemap selection, etx
+- ◻️ Supervised QA - Look for data anomalies, reconcile boundary overlaps, clean map annotations, add basemap selection, etc
 - ◻️ Reconcile all noted QA issues
 - ◻️ Push .pmtiles to cloud storage for staging with engineering team
 - ◻️ Create data dictionary
