@@ -170,3 +170,32 @@
 - Key learning: geometry must be converted to WKT string for BigQuery storage
 - Key learning: PostGIS = visualization database, BigQuery = analytics database
 - Next: Tippecanoe vector tiles
+
+## Session 12 - Tippecanoe and Vector Tiles
+- Installed GDAL via Homebrew (3.13.0 "Iowa City")
+- Exported three PostGIS tables to GeoJSON using ogr2ogr
+  - oregon_counties.geojson — 9.2MB
+  - oregon_trails.geojson — 90MB
+  - oregon_land_ownership.geojson — 301MB
+- Installed Tippecanoe v2.79.0 via Homebrew
+- Generated vector tiles with Tippecanoe:
+  - Fixed layer merging bug by removing redundant --layer flags
+  - Used -L name:file syntax for correct layer naming
+  - zoom levels 5-14, drop-densest-as-needed for performance
+  - Output: tiles/oregon_offroad.pmtiles (67MB)
+- Installed Martin tile server v1.10.1 via Homebrew
+- Wrote tiles/map.html using MapLibre GL JS:
+  - OSM basemap
+  - Vector tile layers from Martin server
+  - Land ownership colored by access type
+  - Trails colored by vehicle type and seasonality
+  - County outlines and labels
+  - Legend and navigation controls
+- Troubleshooting:
+  - Missing glyphs property caused blank map — added OpenMapTiles font source
+  - text-transform capitalize invalid in MapLibre — changed to uppercase
+  - Added missing 4WD seasonal and motorcycle seasonal to legend and layers
+- Key learning: Tippecanoe -L name:file is correct layer naming syntax
+- Key learning: MapLibre requires glyphs property for text labels
+- Key learning: always check browser console for map rendering errors
+- Next: write a QA script, then clean up and finalize the portfolio

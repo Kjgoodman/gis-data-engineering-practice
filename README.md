@@ -52,4 +52,9 @@ To develop hands-on experience with a professional GIS and data engineering stac
   - ✅ Rule-based symbology for land ownership access type
   - ✅ XYZ satellite imagery basemap
 - ✅ BigQuery — all three datasets loaded to cloud
-- 🔲 Tippecanoe — vector tiles
+- ✅ Vector Tiles
+  - ✅ GeoJSON export via GDAL/ogr2ogr
+  - ✅ Tippecanoe tile generation (zoom 5-14)
+  - ✅ Martin tile server
+  - ✅ MapLibre GL JS web map with legend and labels
+- 🔲 QA Pipeline
