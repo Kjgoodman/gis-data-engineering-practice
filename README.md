@@ -35,23 +35,20 @@ with large-scale spatial datasets. Built to practice:
 | Oregon Land Ownership | Oregon GeoHub REST API | 3,266 features |
 
 ## Pipeline Architecture
-REST APIs (Oregon GeoHub, USFS)
-↓
-Python ingestion scripts → PostGIS raw tables
-↓
-SQL transformation → PostGIS clean tables
-↓
-Automated QA (qa_unsupervised.py)
-↓
-Visual QA (QGIS)
-↓
-BigQuery (cloud analytics)
-↓
-GDAL export → GeoJSON
-↓
-Tippecanoe → vector tiles (.pmtiles)
-↓
-Martin tile server → MapLibre GL JS web map
+
+**1. Ingest** — Python scripts fetch from REST APIs with pagination and retry logic
+
+**2. Raw Storage** — PostGIS raw tables preserve source data exactly as received
+
+**3. Transform** — SQL cleans, renames, and filters into clean schema tables
+
+**4. QA** — Automated geometry and attribute checks + visual review in QGIS
+
+**5. Cloud** — BigQuery loads for cloud-scale spatial analytics
+
+**6. Tiles** — GDAL exports to GeoJSON → Tippecanoe generates .pmtiles
+
+**7. Web Map** — Martin tile server → MapLibre GL JS renders in browser
 
 ## QA Approach
 This pipeline uses a two-layer QA approach:
