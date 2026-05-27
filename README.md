@@ -59,5 +59,5 @@ To develop hands-on experience with a professional GIS and data engineering stac
   - ✅ MapLibre GL JS web map with legend and labels
 - 🔲 QA Pipeline
 
-## Map Preview
+## Map Preview (Prior to QA)
 ![Oregon Offroad Map](docs/images/oregon_offroad_map.png)
